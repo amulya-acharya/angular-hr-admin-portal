@@ -1,22 +1,39 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ShellComponent } from './core/layout/shell/shell.component';
+import { authChildGuard, authMatchGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
-  { path: 'auth', loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule) },
+  {
+    path: 'login',
+    loadChildren: () => import('./features/auth/auth.module').then(m => m.AuthModule),
+  },
   {
     path: '',
     component: ShellComponent,
+    canActivateChild: [authChildGuard],
     children: [
-      { path: 'employees', loadChildren: () => import('./features/employees/employees.module').then(m => m.EmployeesModule) },
-      { path: 'leave', loadChildren: () => import('./features/leave/leave.module').then(m => m.LeaveModule) },
-      { path: 'admin', loadChildren: () => import('./features/admin/admin.module').then(m => m.AdminModule) },
-      { path: 'reports', loadChildren: () => import('./features/reports/reports.module').then(m => m.ReportsModule) },
+      {
+        path: 'employees',
+        canMatch: [authMatchGuard],
+        loadChildren: () => import('./features/employees/employees.module').then(m => m.EmployeesModule),
+      },
+      {
+        path: 'leave',
+        canMatch: [authMatchGuard],
+        loadChildren: () => import('./features/leave/leave.module').then(m => m.LeaveModule),
+      },
+      {
+        path: 'admin',
+        canMatch: [authMatchGuard],
+        loadChildren: () => import('./features/admin/admin.module').then(m => m.AdminModule),
+      },
       { path: '', pathMatch: 'full', redirectTo: 'employees' },
     ],
   },
-  { path: '**', redirectTo: '' },
+  { path: '**', redirectTo: 'login' },
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
