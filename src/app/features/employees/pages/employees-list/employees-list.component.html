@@ -1,0 +1,13 @@
+<div *ngIf="loading">Loading...</div>
+<div *ngIf="error">{{ error }}</div>
+
+<ul *ngIf="!loading && !error">
+     <li *ngFor="let e of employees; trackBy: trackById">
+          <a [routerLink]="['/employees', e.id]">
+               {{ e.firstName }} {{ e.lastName }} — {{ e.email }}
+          </a>
+     </li>
+</ul>
+
+<button (click)="prev()" [disabled]="pageIndex === 0">Prev</button>
+<button (click)="next()" [disabled]="(pageIndex + 1) * pageSize >= total">Next</button>
