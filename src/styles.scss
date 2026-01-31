@@ -1,4 +1,165 @@
-/* You can add global styles to this file, and also import other style files */
+/* src/styles.scss */
+@use '@angular/material' as mat;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* 1) Material core (safe to keep even if ng add already set typography) */
+@include mat.core();
+
+/* 2) Themes (Material 3 / Angular Material 18) */
+$appLightTheme: mat.define-theme((color: (theme-type: light,
+                    primary: mat.$azure-palette,
+                    tertiary: mat.$blue-palette,
+               ),
+               density: (scale: 0,
+               ),
+          ));
+
+$sidebarDarkTheme: mat.define-theme((color: (theme-type: dark,
+                    primary: mat.$azure-palette,
+                    tertiary: mat.$blue-palette,
+               ),
+               density: (scale: 0,
+               ),
+          ));
+
+/* 3) Apply LIGHT theme to the whole app */
+html {
+     @include mat.all-component-themes($appLightTheme);
+}
+
+/* 4) Global design tokens (your “dark sidebar + light content” look) */
+:root {
+     --app-bg: #f5f7fb;
+     --surface: #ffffff;
+     --border: rgba(0, 0, 0, 0.08);
+     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06), 0 1px 1px rgba(0, 0, 0, 0.04);
+     --radius: 14px;
+
+     --sidebar-bg: #0b1220;
+     /* dark navy */
+     --sidebar-fg: rgba(255, 255, 255, 0.88);
+     --sidebar-fg-muted: rgba(255, 255, 255, 0.65);
+     --sidebar-border: rgba(255, 255, 255, 0.10);
+     --sidebar-hover: rgba(255, 255, 255, 0.08);
+     --sidebar-active: rgba(255, 255, 255, 0.12);
+}
+
+/* 5) Base page */
+html,
+body {
+     height: 100%;
+}
+
+body {
+     margin: 0;
+     background: var(--app-bg);
+     font-family: Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+     color: rgba(0, 0, 0, 0.87);
+}
+
+/* Optional but recommended:
+   Put <body class="mat-app-background"> in index.html, then this sets Material app bg token.
+   (Angular Material uses --mat-app-background-color for the background token.) :contentReference[oaicite:1]{index=1} */
+body.mat-app-background {
+     --mat-app-background-color: var(--app-bg);
+}
+
+/* 6) Shell helpers (matches your shell layout) */
+.shell {
+     height: 100vh;
+}
+
+.content {
+     background: var(--app-bg);
+}
+
+.page {
+     padding: 18px;
+     max-width: 1200px;
+     margin: 0 auto;
+}
+
+/* 7) Dark Sidebar ONLY (scope Material colors to sidenav) */
+mat-sidenav.sidebar {
+     /* This makes Material components inside the sidenav use dark theme colors. :contentReference[oaicite:2]{index=2} */
+     @include mat.all-component-colors($sidebarDarkTheme);
+
+     background: var(--sidebar-bg);
+     color: var(--sidebar-fg);
+     border-right: 1px solid var(--sidebar-border);
+}
+
+/* Sidebar branding */
+.sidebar .brand {
+     padding: 18px 16px;
+     font-weight: 700;
+     letter-spacing: 0.2px;
+     color: var(--sidebar-fg);
+}
+
+/* Sidebar links (Angular Material list items in MDC) */
+.sidebar a.mat-mdc-list-item {
+     border-radius: 12px;
+     margin: 4px 10px;
+     color: var(--sidebar-fg);
+}
+
+.sidebar a.mat-mdc-list-item:hover {
+     background: var(--sidebar-hover);
+}
+
+.sidebar a.mat-mdc-list-item.active,
+.sidebar a.mat-mdc-list-item.router-link-active {
+     background: var(--sidebar-active);
+}
+
+.sidebar .mat-icon {
+     color: var(--sidebar-fg-muted);
+}
+
+.sidebar a.mat-mdc-list-item.active .mat-icon,
+.sidebar a.mat-mdc-list-item.router-link-active .mat-icon {
+     color: var(--sidebar-fg);
+}
+
+/* 8) Light Topbar + reusable card styles */
+.topbar {
+     position: sticky;
+     top: 0;
+     z-index: 10;
+     background: var(--surface);
+     border-bottom: 1px solid var(--border);
+}
+
+@mixin surface-card {
+     background: var(--surface);
+     border: 1px solid var(--border);
+     border-radius: var(--radius);
+     box-shadow: var(--shadow-sm);
+}
+
+.card {
+     @include surface-card;
+}
+
+/* Use these in pages (employees list, leave list, etc.) */
+.table-card {
+     @include surface-card;
+     padding: 12px;
+     overflow: hidden;
+}
+
+.filter-bar {
+     @include surface-card;
+     padding: 12px;
+     display: flex;
+     gap: 10px;
+     align-items: center;
+     flex-wrap: wrap;
+}
+
+.filter-chips {
+     display: flex;
+     gap: 8px;
+     flex-wrap: wrap;
+     margin-top: 10px;
+}
