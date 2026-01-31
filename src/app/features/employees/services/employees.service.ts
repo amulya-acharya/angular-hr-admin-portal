@@ -1,4 +1,3 @@
-// src/app/features/employees/services/employees.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -22,7 +21,7 @@ export interface EmployeesResponse {
 
 @Injectable({ providedIn: 'root' })
 export class EmployeesService {
-  private baseUrl = 'https://dummyjson.com/users';
+  private readonly baseUrl = 'https://dummyjson.com/users';
 
   constructor(private http: HttpClient) { }
 
