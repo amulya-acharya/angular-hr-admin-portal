@@ -7,6 +7,12 @@ import { EmployeesListComponent } from './pages/employees-list/employees-list.co
 import { EmployeeDetailComponent } from './pages/employee-detail/employee-detail.component';
 import { EmployeeEditComponent } from './pages/employee-edit/employee-edit.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from "@angular/material/icon";
+import { MatDividerModule } from '@angular/material/divider';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -19,7 +25,13 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     EmployeesRoutingModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatMenuModule,
+    MatIconModule,
+    MatDividerModule,
+    MatButtonModule
+]
 })
 export class EmployeesModule { }

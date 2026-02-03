@@ -1,0 +1,269 @@
+.employees-container {
+  padding: 24px;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+}
+
+.employees-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+
+  h1 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0;
+  }
+
+  .header-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+}
+
+.search-input {
+  padding: 8px 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 240px;
+  background-color: #fff;
+  color: #666;
+
+  &::placeholder {
+    color: #999;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #2196f3;
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+  }
+}
+
+.export-btn {
+  padding: 8px 20px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #1976d2;
+  }
+
+  &:active {
+    background-color: #1565c0;
+  }
+}
+
+.table-wrapper {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.employees-table {
+  width: 100%;
+}
+
+// Override Material Table Styling with ::ng-deep
+::ng-deep .employees-table {
+  border-collapse: collapse;
+
+  // Header Styling
+  .mat-mdc-header-cell {
+    padding: 16px 12px !important;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background-color: #f8f9fa !important;
+    border-bottom: 2px solid #e8e8e8 !important;
+  }
+
+  // Body Styling
+  .mat-mdc-cell {
+    padding: 16px 12px !important;
+    font-size: 14px;
+    color: #1a1a1a;
+    border-bottom: 1px solid #f0f0f0 !important;
+  }
+
+  .mat-mdc-row {
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #f9f9f9;
+    }
+  }
+}
+
+// Status Badge Styling
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+
+  &.active {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+  }
+
+  &.inactive {
+    background-color: #ffebee;
+    color: #c62828;
+  }
+
+  &.pending {
+    background-color: #fff3e0;
+    color: #e65100;
+  }
+
+  &.onboarding {
+    background-color: #fce4ec;
+    color: #c2185b;
+  }
+}
+
+// Action Menu Button
+.action-menu-btn {
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  color: #999;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #f0f0f0;
+    color: #333;
+  }
+}
+
+// Details Button
+.details-btn {
+  padding: 6px 16px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+// Delete Action in Menu
+::ng-deep .delete-action {
+  color: #d32f2f !important;
+
+  .mat-icon {
+    color: #d32f2f !important;
+  }
+
+  &:hover {
+    background-color: #ffebee;
+  }
+}
+
+// Loading & Error Messages
+.loading-message,
+.error-message {
+  padding: 32px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.loading-message {
+  color: #666;
+}
+
+.error-message {
+  color: #d32f2f;
+}
+
+// Paginator Styling
+::ng-deep .mat-mdc-paginator {
+  background-color: #f8f9fa !important;
+  border-top: 1px solid #e8e8e8 !important;
+
+  .mat-mdc-paginator-container {
+    padding: 8px 16px;
+    min-height: 56px;
+  }
+
+  .mat-mdc-paginator-page-size,
+  .mat-mdc-paginator-range-actions {
+    align-items: center;
+  }
+
+  .mat-mdc-paginator-page-size-label {
+    font-size: 13px;
+    color: #666;
+  }
+
+  .mat-mdc-paginator-range-label {
+    font-size: 13px;
+    color: #666;
+    margin: 0 16px;
+  }
+}
+
+// Responsive Design
+@media (max-width: 1024px) {
+  .employees-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+
+    .header-actions {
+      width: 100%;
+
+      .search-input {
+        flex: 1;
+      }
+    }
+  }
+
+  ::ng-deep .employees-table {
+    .mat-mdc-header-cell,
+    .mat-mdc-cell {
+      padding: 12px 8px !important;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .employees-container {
+    padding: 16px;
+  }
+
+  .employees-header h1 {
+    font-size: 22px;
+  }
+
+  ::ng-deep .employees-table {
+    .mat-mdc-header-cell,
+    .mat-mdc-cell {
+      padding: 10px 6px !important;
+      font-size: 12px;
+    }
+  }
+
+  .status-badge {
+    padding: 3px 8px;
+    font-size: 11px;
+  }
+}

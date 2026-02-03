@@ -1,13 +1,53 @@
-<div *ngIf="loading">Loading...</div>
-<div *ngIf="error">{{ error }}</div>
+<div class="employees-container">
 
-<ul *ngIf="!loading && !error">
-     <li *ngFor="let e of employees; trackBy: trackById">
-          <a [routerLink]="['/employees', e.id]">
-               {{ e.firstName }} {{ e.lastName }} — {{ e.email }}
-          </a>
-     </li>
-</ul>
+     <!-- Table Section -->
+     <div class="table-wrapper">
+          <div *ngIf="loading" class="loading-message">Loading...</div>
+          <div *ngIf="error" class="error-message">{{ error }}</div>
 
-<button (click)="prev()" [disabled]="pageIndex === 0">Prev</button>
-<button (click)="next()" [disabled]="(pageIndex + 1) * pageSize >= total">Next</button>
+          <table mat-table [dataSource]="dataSource" class="employees-table" *ngIf="!loading && !error">
+               <!-- ID Column -->
+               <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef>ID</th>
+                    <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+               </ng-container>
+
+               <!-- First Name Column -->
+               <ng-container matColumnDef="firstName">
+                    <th mat-header-cell *matHeaderCellDef>First Name</th>
+                    <td mat-cell *matCellDef="let element">{{ element.firstName }}</td>
+               </ng-container>
+
+               <!-- Last Name Column -->
+               <ng-container matColumnDef="lastName">
+                    <th mat-header-cell *matHeaderCellDef>Last Name</th>
+                    <td mat-cell *matCellDef="let element">{{ element.lastName }}</td>
+               </ng-container>
+
+               <!-- Email Column -->
+               <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef>Email</th>
+                    <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+               </ng-container>
+
+               <!-- Actions Column -->
+               <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element">
+                         <button mat-raised-button color="primary" (click)="viewEmployeeDetails(element)"
+                              class="details-btn">
+                              Details
+                         </button>
+                    </td>
+               </ng-container>
+
+               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+               <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+
+          <!-- Paginator -->
+          <mat-paginator [length]="total" [pageSize]="size" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+               (page)="pagination($event)" aria-label="Select page of periodic elements">
+          </mat-paginator>
+     </div>
+</div>
